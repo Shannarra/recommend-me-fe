@@ -2,12 +2,19 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {IRootState} from "./reducers";
-import {LOCAL_STORAGE, LOGIN_STATE, USER_LOGIN_STATE, USER_LS_NAME} from "./constants";
+import {JWT_LS_NAME, LOCAL_STORAGE, LOGIN_STATE, USER_LOGIN_STATE, USER_LS_NAME} from "./constants";
 import {userLogin} from "./actions/userActions";
 import {Alert} from "react-bootstrap";
 import {RecommendationsList} from "./components/recommendations/RecommendationsList";
 import {LoginForm} from "./components/LoginForm";
+import {getAllRecommendations} from "./actions/recommendationActions";
+import {IUserRecommendationsProps} from "./types/recommendationProps";
 
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
+
+export const Redirect = (to: string) => {
+    return
+}
 
 interface IUserProps {
     id: number;
@@ -47,54 +54,56 @@ function LoginStateAlert({ statusCode, state, statusMessage}: ILoginState) {
     return <></>
 }
 
-function App() {
 
-    // @ts-ignore
-    const _user = useSelector((state: IRootState) => state.userLogin)
-
-    const dispatch = useDispatch();
+const Home = () => {
 
     const [user, setUser] = useState<IUserProps | null>(LOCAL_STORAGE.tryParseRead(USER_LS_NAME));
     const loggedIn = user !== null;
 
     const [loginState, setLoginState] = useState<ILoginState | null>(LOCAL_STORAGE.tryParseRead(USER_LOGIN_STATE));
 
-    useEffect(() =>{
-        // TODO: This is fake auto-login, fix!
-        // if (user === null) {
-        //
-        //     dispatch(userLogin({
-        //         user: {
-        //             email: 'test@mail.com',
-        //             password: '123456'
-        //         }
-        //     }));
-        //
-        //     setUser(LOCAL_STORAGE.tryParseRead(USER_LS_NAME))
-        //     setLoginState(LOCAL_STORAGE.tryParseRead(USER_LOGIN_STATE));
-        //
-        //     console.log(loginState);
-        //     setTimeout(() => window.location.reload(), 500);
-        // } else {
-        //     LOCAL_STORAGE.remove(USER_LOGIN_STATE);
-        // }
-    }, [dispatch])
-
-    console.log(loginState);
     return (
-    <div className="App">
-        {loginState && <LoginStateAlert {...loginState} />}
-        {loggedIn && (
-            <>
-                <h1>Hello, {user?.fname}</h1>
-                Recommendations sent by {user?.fname}
-                <RecommendationsList />
-            </>
-        )}
+        <>
+            {loginState && <LoginStateAlert {...loginState} />}
+            {loggedIn && (
+                <>
+                    <h1>Hello, {user?.fname}</h1>
+                    Recommendations sent by {user?.fname}
+                    <RecommendationsList />
+                </>
+            )}
 
-        {!loggedIn && <LoginForm />}
-    </div>
-  );
+            {/* a new way to do <Redirect/> ??? */}
+            {!loggedIn && <Navigate replace to='/login' />}
+        </>
+    );
+}
+
+function Logout() {
+    window.localStorage.clear();
+    return <Navigate replace to='/login' />;
+}
+
+function App() {
+    return (
+        <div className="App">
+            <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/login" element={<LoginForm/>} />
+                <Route path="/logout" element={<Logout/>} />
+                <Route path="/recommendations" element={<RecommendationsList/>}>
+                    {/*TODO: FIX ALL ROUTES! */}
+                    <Route path="/recommendations/new" element={null}></Route>
+                    <Route path="/recommendations/view" element={null}>
+                        <Route path="recommendations/:id" element={null}></Route>
+                    </Route>
+                </Route>
+                <Route path="/profile">
+                    <Route path="/profile/edit" element={null}></Route>
+                </Route>
+            </Routes>
+        </div>
+    )
 }
 
 export default App;

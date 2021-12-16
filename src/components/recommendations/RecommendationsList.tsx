@@ -1,146 +1,15 @@
 import {Card, Col, Container, Row} from "react-bootstrap";
-import React from "react";
-
-
-const FAKE_Q_LIST =
-[
-    {
-        "id": 10,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": false,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/0k/vj/0kvjtvr6k0xh1mqozl2yxqez4uej",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 11,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/jr/nn/jrnnmbmt4qvoy7iwmi6ig5qr629r",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 14,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/hp/vm/hpvm0jrlrfznpjsn8m83lyj9mcmt",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 15,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/8a/o9/8ao9h8gbp3jfs9bx2hiku3h6hq8l",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 16,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/77/di/77dimppywe6c96pam6fj1ta47nbs",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 18,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/h2/av/h2av9u709woaxfnvfis8nbg7zxwr",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 19,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/pv/1w/pv1w65t8s79vmdxgbfdgdy0nh4wx",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 20,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/4r/4z/4r4zpf32pajwm7z64arvlc4fndav",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 21,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": null,
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/3x/yy/3xyyp5ykt29ui1msqp0xj34694g1",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 22,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": "2021-12-10",
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/mr/qf/mrqfm7dudevd7pwofqjwr1h5lvvo",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    },
-    {
-        "id": 23,
-        "by": "test@mail.com",
-        "updated_at": "2021-12-10",
-        "send_now": true,
-        "time_sent": "2021-12-10",
-        "cv": {
-            "url": "/home/petarangelov/Desktop/dev/rails/ReCommendMe/storage/i9/kc/i9kcddxea2r3jrix955o0zhiamqu",
-            "name": "file.pdf",
-            "size_b": 8987
-        }
-    }
-]
+import React, {useEffect, useState} from "react";
+import {JWT_LS_NAME, LOCAL_STORAGE, RECOMMENDATIONS_LS_NAME, USER_LS_NAME} from "../../constants";
+import {useDispatch} from "react-redux";
+import {getAllRecommendations} from "../../actions/recommendationActions";
+import {BeatLoader} from "react-spinners";
+import {Link} from "react-router-dom";
 
 interface IRecommendationProps
 {
     by: string,
+    to: string,
     time_sent?: null | string,
     cv: IRecommendationCVProps,
     id: number,
@@ -161,8 +30,7 @@ function RecommendationCard(recommendation :IRecommendationProps) {
                 <Card.Body>
                     <Card.Title>File: {recommendation.cv.name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">By: {recommendation.by}</Card.Subtitle>
-                    {/*TODO: ADD A 'TO' PROPERTY AFTER READING! */}
-                    <Card.Subtitle className="mb-2 text-muted">To: {recommendation.by}</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">To: {recommendation.to}</Card.Subtitle>
                     <Card.Text>
                         This recommendation
                         {
@@ -180,12 +48,43 @@ function RecommendationCard(recommendation :IRecommendationProps) {
 }
 
 export const RecommendationsList = () => {
+
+    if (!LOCAL_STORAGE.tryParseRead(RECOMMENDATIONS_LS_NAME))
+        LOCAL_STORAGE.write(RECOMMENDATIONS_LS_NAME, JSON.stringify({ }));
+
+    const [recommendations, setRecs] = useState<IRecommendationProps[]>(LOCAL_STORAGE.tryParseRead(RECOMMENDATIONS_LS_NAME).recommendations);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllRecommendations({
+            userId: LOCAL_STORAGE.tryParseRead(USER_LS_NAME).id,
+            userToken: LOCAL_STORAGE.tryParseRead(JWT_LS_NAME).token
+        }));
+
+        setRecs(LOCAL_STORAGE.tryParseRead(RECOMMENDATIONS_LS_NAME).recommendations);
+
+        //if (!recommendations) setTimeout(() => window.location.reload(), 500);
+    }, [dispatch])
+
   return(
-      <>
+      recommendations?.length > 0 ? <>
           <h3>Printing recommendations:</h3>
-          {FAKE_Q_LIST.map((recommendation, id: number) => {
+          {recommendations && recommendations.map((recommendation: IRecommendationProps, id: number) => {
               return <RecommendationCard {...recommendation} key={id}/>
           })}
+
+          {!recommendations && (
+              <>
+                  <div className="text-center">
+                      <h3>Loading...</h3>
+                      <BeatLoader css="color: lightgray; display: block;" />
+                  </div>
+              </>
+          )}
+      </> : <>
+        <h2 className="text-center text-warning"> No recommendations found.</h2>
+          Don't worry, you can always <Link to='/recommendations/new'>create one</Link>.
       </>
   )
 }

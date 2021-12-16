@@ -1,6 +1,6 @@
 import {IUserLoginProps} from "../../types/userLoginProps";
 import axios from "axios";
-import {LOCAL_STORAGE, LOGIN_PATH, USER_LS_NAME, USER_LOGIN_STATE, LOGIN_STATE} from "../../constants";
+import {LOCAL_STORAGE, LOGIN_PATH, USER_LS_NAME, USER_LOGIN_STATE, LOGIN_STATE, JWT_LS_NAME} from "../../constants";
 
 export const log_in = (user: IUserLoginProps) => {
     axios
@@ -14,6 +14,7 @@ export const log_in = (user: IUserLoginProps) => {
                     statusCode: res.status,
                     statusMessage: res.statusText
                 }))
+                LOCAL_STORAGE.write(JWT_LS_NAME, JSON.stringify({token: res.data.token}))
                 LOCAL_STORAGE.write(USER_LS_NAME, JSON.stringify(res.data.user));
             } else {
                 LOCAL_STORAGE.write(USER_LOGIN_STATE, JSON.stringify({

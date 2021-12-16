@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
-
+import { BrowserRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import {createStore} from 'redux';
@@ -20,7 +20,9 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
-          <App />
+          <BrowserRouter>
+              <App />
+          </BrowserRouter>
       </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -4,7 +4,9 @@ import {FormLabel} from "react-bootstrap";
 import {IUserLoginProps} from "../types/userLoginProps";
 import {userLogin} from "../actions/userActions";
 import {useDispatch} from "react-redux";
-import {LOCAL_STORAGE, USER_LS_NAME} from "../constants";
+import {LOCAL_STORAGE, USER_LOGIN_STATE, USER_LS_NAME} from "../constants";
+import {Navigate} from "react-router-dom";
+import React, {useState} from "react";
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -26,14 +28,14 @@ export const LoginForm = () => {
         const props: IUserLoginProps = { user: { email, password} }
         dispatch(userLogin(props));
 
-        console.log(LOCAL_STORAGE.tryParseRead(USER_LS_NAME));
+        // force an update so we redirect
         setTimeout(() => window.location.reload(), 500);
     }
 
-
-
-
-  return(
+    if (LOCAL_STORAGE.tryParseRead(USER_LOGIN_STATE))
+        return <Navigate replace to='/' />
+    else
+        return(
       <>
         <h1>In order to access / create recommendations please log in:</h1>
 
@@ -59,5 +61,5 @@ export const LoginForm = () => {
             )}
         </Formik>
       </>
-  )
+    );
 }

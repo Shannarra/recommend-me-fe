@@ -2,6 +2,7 @@ export const COUNTER_LS_NAME: string = 'counterState';
 export const LOGGED_LS_NAME: string = 'isLoggedIn';
 export const JWT_LS_NAME: string = '__jwt';
 export const USER_LS_NAME: string = '__user';
+export const RECOMMENDATIONS_LS_NAME: string = '__recommendations';
 export const USER_LOGIN_STATE: string = '__login_state';
 
 
@@ -9,6 +10,9 @@ export const API_VERSION = 1;
 export const ROOT = `http://localhost:3000`
 export const API_ROOT = `${ROOT}/api/v${API_VERSION}`
 export const LOGIN_PATH = `${API_ROOT}/users/sign_in`
+export const ALL_RECOMMENDATIONS_PATH = (id: number) =>{
+    return `${API_ROOT}/users/${id}/recommendations`;
+}
 
 export const ALERT_CONSTANTS = {
     SUCCESS: "Operation succeeded",
@@ -20,6 +24,10 @@ export const USER_ACTION_CONSTANTS = {
     LOGIN: 'LOG_IN',
     LOGOUT: 'LOG_OUT',
     REGISTER: 'REGISTER'
+}
+
+export const RECOMMENDATION_ACTION_CONSTANTS = {
+    GET_ALL: 'GET_ALL_RECOMMENDATIONS'
 }
 
 export const LOGIN_STATE = {
