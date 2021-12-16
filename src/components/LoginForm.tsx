@@ -4,9 +4,9 @@ import {FormLabel} from "react-bootstrap";
 import {IUserLoginProps} from "../types/userLoginProps";
 import {userLogin} from "../actions/userActions";
 import {useDispatch} from "react-redux";
-import {LOCAL_STORAGE, USER_LOGIN_STATE, USER_LS_NAME} from "../constants";
+import {LOCAL_STORAGE, USER_LOGIN_STATE} from "../constants";
 import {Navigate} from "react-router-dom";
-import React, {useState} from "react";
+import React from "react";
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()

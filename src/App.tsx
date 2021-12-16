@@ -1,14 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import './App.css';
-import {useDispatch, useSelector} from "react-redux";
-import {IRootState} from "./reducers";
-import {JWT_LS_NAME, LOCAL_STORAGE, LOGIN_STATE, USER_LOGIN_STATE, USER_LS_NAME} from "./constants";
-import {userLogin} from "./actions/userActions";
+import {LOCAL_STORAGE, USER_LOGIN_STATE, USER_LS_NAME} from "./constants";
 import {Alert} from "react-bootstrap";
-import {RecommendationsList} from "./components/recommendations/RecommendationsList";
+import {RecommendationsList } from "./components/recommendations/RecommendationsList";
+import { NewRecommendation } from "./components/recommendations/NewRecommendation";
 import {LoginForm} from "./components/LoginForm";
-import {getAllRecommendations} from "./actions/recommendationActions";
-import {IUserRecommendationsProps} from "./types/recommendationProps";
 
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 
@@ -68,7 +64,7 @@ const Home = () => {
             {loggedIn && (
                 <>
                     <h1>Hello, {user?.fname}</h1>
-                    Recommendations sent by {user?.fname}
+                    Recommendations sent by {user?.fname} (<Link to='/logout'>log out</Link>)
                     <RecommendationsList />
                 </>
             )}
@@ -91,16 +87,16 @@ function App() {
                 <Route path="/" element={<Home/>} />
                 <Route path="/login" element={<LoginForm/>} />
                 <Route path="/logout" element={<Logout/>} />
-                <Route path="/recommendations" element={<RecommendationsList/>}>
-                    {/*TODO: FIX ALL ROUTES! */}
-                    <Route path="/recommendations/new" element={null}></Route>
-                    <Route path="/recommendations/view" element={null}>
-                        <Route path="recommendations/:id" element={null}></Route>
-                    </Route>
+                <Route path="/recommendations" element={<RecommendationsList/>}/>
+
+                {/*TODO: FIX ALL ROUTES! */}
+                <Route path="/recommendations/new" element={<NewRecommendation/>}/>
+                <Route path="/recommendations/view" element={null}>
+                    <Route path="recommendations/:id" element={null}/>
                 </Route>
-                <Route path="/profile">
-                    <Route path="/profile/edit" element={null}></Route>
-                </Route>
+
+                <Route path="/profile" />
+                <Route path="/profile/edit" element={null}/>
             </Routes>
         </div>
     )

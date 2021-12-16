@@ -1,7 +1,7 @@
 import {
     LOCAL_STORAGE,
     RECOMMENDATIONS_LS_NAME,
-    RECOMMENDATION_ACTION_CONSTANTS, USER_LS_NAME
+    RECOMMENDATION_ACTION_CONSTANTS
 } from "../constants";
 import {get_all_recommendations_for_user} from "./requests/recommendationRequests";
 
