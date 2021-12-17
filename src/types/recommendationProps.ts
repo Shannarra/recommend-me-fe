@@ -10,3 +10,7 @@ export interface ICreateRecommendationProps {
     comment?: string;
     send_now?: boolean;
 }
+
+export interface IUpdateRecommendationProps extends ICreateRecommendationProps {
+    id: number;
+}

@@ -31,7 +31,8 @@ export const USER_ACTION_CONSTANTS = {
 }
 
 export const RECOMMENDATION_ACTION_CONSTANTS = {
-    GET_ALL: 'GET_ALL_RECOMMENDATIONS'
+    GET_ALL: 'GET_ALL_RECOMMENDATIONS',
+    SEND_NOW: 'SEND_RECOMMENDATION_NOW'
 }
 
 export const LOGIN_STATE = {
@@ -51,4 +52,19 @@ export const LOCAL_STORAGE = {
         else
             return JSON.parse(it);
     }
+}
+
+export const REQUEST_HEADERS = {
+    CONTENT_TYPE: {
+        JSON: {"Content-Type": "application/json"},
+        FORM_DATA: {"Content-Type": "multipart/form-data"}
+    },
+    JWT: (token: string) => {
+        return { Authorization: `Bearer ${token}` }
+    }
+};
+
+export enum REQUEST_STATUS {
+    OK = 200,
+    UNAUTHORIZED = 401
 }
