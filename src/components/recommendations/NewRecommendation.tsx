@@ -9,6 +9,7 @@ export const NewRecommendation = () => {
     const [file, setFile] = useState<any>();
     const [isWrongType, setIsWrongType] = useState(false);
     const [checked, setChecked] = useState(false);
+    const [comment, setComment] = useState("");
     const [isSet, setIsSet] = useState(false);
     const currentUser = LOCAL_STORAGE.tryParseRead(USER_LS_NAME);
 
@@ -21,9 +22,11 @@ export const NewRecommendation = () => {
             cv: file,
             by: currentUser.email,
             user_id: currentUser.id,
+            comment: comment,
             send_now: checked
         };
 
+        // TODO: maybe make a reducer and dispatch() ?
         create_new_recommendation(data)
     }
 
@@ -42,12 +45,17 @@ export const NewRecommendation = () => {
         console.log(!checked);
     }
 
+    const handleCommentChange = (e: any) =>  {
+        setComment(e.target.value);
+    }
+
     return (
         <div className="row" style={{
             position: 'absolute', left: '50%', top: '30%',
             transform: 'translate(-50%, -50%)'
         }}>
             <div>
+                {comment}
                 {isWrongType && <Alert variant='danger'>Wrong file type provided. Please provide only .PDF files.</Alert>}
                 {isSet ? (
                     <div>
@@ -59,6 +67,8 @@ export const NewRecommendation = () => {
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label>Please upload only .PDF files, any other will be ignored.</Form.Label>
                     <Form.Control  style={{margin: '15px 0'}} type="file" onChange={handleFileChange} />
+                    <Form.Label className="text-lg-start">Maybe add a comment? <span className="text-muted">(optional)</span></Form.Label>
+                    <Form.Control as="textarea" rows={5} name="comment" onChange={handleCommentChange} />
                     <Form.Group className="text-lg-start" style={{padding: '15px 0'}}>
                         <Form.Check type="checkbox" onChange={handleCheckChange} label="Send now?"/>
                     </Form.Group>

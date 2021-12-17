@@ -33,14 +33,20 @@ export const create_new_recommendation = (props: ICreateRecommendationProps) => 
     const token = LOCAL_STORAGE.tryParseRead(JWT_LS_NAME).token;
     console.log(token);
 
-    const normal = new FormData();
-    normal.append("cv", props.cv );
-    normal.append("by", props.by );
-    normal.append("user_id", props.user_id.toString());
+    const formData = new FormData();
+    formData.append("cv", props.cv );
+    formData.append("by", props.by );
+    formData.append("user_id", props.user_id.toString());
+
+    if (props.comment)
+        formData.append("comment", props.comment?.toString());
     if (props.send_now)
-        normal.append("send_now", props.send_now?.toString());
+        formData.append("send_now", props.send_now?.toString());
+
+    console.log(props)
+
     axios
-        .post(`${CREATE_RECOMMENDATION_PATH(props.user_id)}`, normal, {
+        .post(`${CREATE_RECOMMENDATION_PATH(props.user_id)}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`

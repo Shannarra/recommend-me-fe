@@ -7,5 +7,6 @@ export interface ICreateRecommendationProps {
     user_id: number;
     cv: File;
     by: string;
+    comment?: string;
     send_now?: boolean;
 }

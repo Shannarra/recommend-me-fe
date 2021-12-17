@@ -64,7 +64,8 @@ const Home = () => {
             {loggedIn && (
                 <>
                     <h1>Hello, {user?.fname}</h1>
-                    Recommendations sent by {user?.fname} (<Link to='/logout'>log out</Link>)
+                    Recommendations sent by {user?.fname} (<Link to='/logout'>log out</Link>) <br/>
+                    <Link to='/recommendations/new' className="btn btn-success">Create a new one!</Link>
                     <RecommendationsList />
                 </>
             )}

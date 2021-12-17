@@ -10,6 +10,7 @@ interface IRecommendationProps
 {
     by: string,
     to: string,
+    comment: string,
     time_sent?: null | string,
     cv: IRecommendationCVProps,
     id: number,
@@ -28,16 +29,19 @@ function RecommendationCard(recommendation :IRecommendationProps) {
         <Container>
             <Card>
                 <Card.Body>
-                    <Card.Title>File: {recommendation.cv.name}</Card.Title>
+                    <Card.Title>File: {recommendation.cv.name} ({recommendation.cv.size_b} B)</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">By: {recommendation.by}</Card.Subtitle>
                     <Card.Subtitle className="mb-2 text-muted">To: {recommendation.to}</Card.Subtitle>
                     <Card.Text>
+                        <p>
                         This recommendation
                         {
                             recommendation.time_sent === null ?
                                 " hasn't been sent yet" :
                                 ` has been sent on ${recommendation.time_sent}`
                         }.
+                        </p>
+                        {recommendation.comment && <p><i>"{recommendation.comment}"</i></p>}
                     </Card.Text>
                     <Card.Link href={`${recommendation.cv.url}`}>File url</Card.Link> <br/>
                     {!recommendation.time_sent && <button className='btn btn-success'>Send now!</button>}
