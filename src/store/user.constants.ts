@@ -1,0 +1,5 @@
+export const USER_ACTIONS = {
+    LOGIN: "LOGIN",
+    LOGIN_ERR: "LOGIN_ERR",
+    LOGIN_JWT_RECEIVED: "LOGIN_JWT_RECEIVED"
+}
