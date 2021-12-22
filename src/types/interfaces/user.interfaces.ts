@@ -1,4 +1,4 @@
-import {IRecommendationsList} from "./recommendation.interfaces";
+import {IRecommendationProps, IRecommendationsList} from "./recommendation.interfaces";
 
 export interface IUserLoginProps {
     user: {

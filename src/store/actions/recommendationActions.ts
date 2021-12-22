@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ALL_RECOMMENDATIONS_PATH, REQUEST_HEADERS} from "../request.constatns";
+import {ALL_RECOMMENDATIONS_PATH, REQUEST_HEADERS, SPECIFIC_RECOMMENDATION_PATH} from "../request.constatns";
 import {RECOMMENDATION_ACTIONS} from "../../constants";
 
 export const getAllRecommendations = (dispatch: any, user_id: number, token: string) => {

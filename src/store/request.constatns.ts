@@ -5,6 +5,8 @@ export const LOGIN_PATH = `${API_ROOT}/users/sign_in`
 export const API_USERS_ROOT = `${API_ROOT}/users`
 export const CREATE_RECOMMENDATION_PATH = (id: number) => `${API_USERS_ROOT}/${id}/recommendations`
 export const ALL_RECOMMENDATIONS_PATH = (id: number) => `${API_USERS_ROOT}/${id}/recommendations`
+export const SPECIFIC_RECOMMENDATION_PATH = (uid: number, rid: number) => `${API_USERS_ROOT}/${uid}/recommendations/${rid}`
+
 
 export const REQUEST_HEADERS = {
     CONTENT_TYPE: {

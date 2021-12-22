@@ -1,20 +1,27 @@
 import {IRecommendationProps, IRecommendationsList} from "../../types/interfaces/recommendation.interfaces";
 import {Row, Col, Container} from "react-bootstrap";
 import {BeatLoader} from "react-spinners";
+import {RecommendationItem} from "./RecommendationItem";
+import {useDispatch, useSelector} from "react-redux";
+import {getAllRecommendations} from "../../store/actions/recommendationActions";
+import {IRootState} from "../../types/interfaces/state.interfaces";
+import {useEffect} from "react";
 
-function RecommendationItem(props: { recommendation: IRecommendationProps }) {
-    return (<Col md="5">
-        {props.recommendation.comment}
-    </Col>);
-}
+export const RecommendationsList = () => {
+    const userStore = useSelector((state: IRootState) => state.user.user);
+    const dispatch = useDispatch();
 
-export const RecommendationsList = (props: { recommendations: IRecommendationsList}) => {
-    const {recommendations} = props.recommendations;
+    const recsStore = useSelector((state: IRootState) => state.user.recommendations);
 
-    if (props.recommendations.error)
-        return <h1>{props.recommendations.error.message}</h1>
+    const recommendations = recsStore.recommendations;
 
-    if (!props.recommendations.loading)
+    useEffect(() => {
+        if (!recommendations || recommendations.length === 0) {
+            getAllRecommendations(dispatch, userStore.user.id, userStore.token);
+        }
+    })
+
+    if (!recsStore.loading)
       return (
           <Container>
               <Row md="6">
