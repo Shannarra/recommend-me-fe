@@ -1,5 +1,4 @@
-import {useLocation, Navigate} from "react-router-dom";
-import {IRecommendationProps} from "../../types/interfaces/recommendation.interfaces";
+import {useLocation, Navigate, Link} from "react-router-dom";
 
 export const RecommendationView = () => {
     const location= useLocation();
@@ -12,6 +11,7 @@ export const RecommendationView = () => {
 
     return (
         <div className="row">
+            <Link to='/recommendations' className="btn btn-primary">🔙 To homepage</Link>
             <div className="col-3"></div>
             <div className="col-6">
                 <h1 className="text-center">Details about recommendation №{recommendation.id}</h1>

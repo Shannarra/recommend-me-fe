@@ -5,11 +5,10 @@ import {BeatLoader} from "react-spinners";
 import {IRootState} from "../types/interfaces/state.interfaces";
 import {AfterLogin} from "./user/AfterLogin";
 import {useEffect} from "react";
+import {Simulate} from "react-dom/test-utils";
 
 export const Home = () => {
-
     const {loading, error, user} = useSelector((state: IRootState) => state.user.user)
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -27,11 +26,13 @@ export const Home = () => {
     if (user && !loading)
     {}
 
-
-    if (loading && !error)
-        return <>Loading <br/><BeatLoader/></>
-    else if (error)
-        return <><h1 className="text-danger">{error.message}</h1></>
-    else
-        return <><AfterLogin user={user.user} token={user.token} /></>
+    return loading ?
+        <>
+            Loading <br/>
+            <BeatLoader/>
+        </> :
+        <>
+            {error && <h1 className="text-danger">{error?.message}</h1>}
+            {!error && <AfterLogin user={user.user} token={user.token} />}
+        </>
 }

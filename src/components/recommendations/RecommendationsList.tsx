@@ -1,12 +1,11 @@
-import {IRecommendationProps, IRecommendationsList} from "../../types/interfaces/recommendation.interfaces";
-import {Row, Col, Container} from "react-bootstrap";
+import {IRecommendationProps} from "../../types/interfaces/recommendation.interfaces";
+import {Row, Container} from "react-bootstrap";
 import {BeatLoader} from "react-spinners";
 import {RecommendationItem} from "./RecommendationItem";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllRecommendations} from "../../store/actions/recommendationActions";
 import {IRootState} from "../../types/interfaces/state.interfaces";
 import {useEffect} from "react";
-
 export const RecommendationsList = () => {
     const userStore = useSelector((state: IRootState) => state.user.user);
     const dispatch = useDispatch();
@@ -16,16 +15,16 @@ export const RecommendationsList = () => {
     const recommendations = recsStore.recommendations;
 
     useEffect(() => {
-        if (!recommendations || recommendations.length === 0) {
-            getAllRecommendations(dispatch, userStore.user.id, userStore.token);
-        }
-    })
+        getAllRecommendations(dispatch, userStore.user.id, userStore.token);
+        console.log('loaded')
+    }, [dispatch, userStore.user.id,  userStore.token])
 
     if (!recsStore.loading)
       return (
           <Container>
+              {recsStore.error && <h1 className='text-danger'>{recsStore.error.message}</h1>}
               <Row md="6">
-                  {
+                  {!recsStore.error &&
                       recommendations?.map((x: IRecommendationProps) => <RecommendationItem recommendation={x} key={x.id} />)
                   }
               </Row>
