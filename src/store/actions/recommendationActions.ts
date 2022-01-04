@@ -31,3 +31,16 @@ export const sendRecommendationNow = (dispatch: any, user_id: number, token: str
     }).catch(e => dispatch({type: RECOMMENDATION_ACTIONS.SEND_NOW, payload: e}))
 }
 
+
+export const getSpecificRecommendation = (dispatch: any, user_id: number, token: string, rec_id: number) => {
+    axios.get(SPECIFIC_RECOMMENDATION_PATH(user_id,  rec_id), {
+        headers: {
+            ...REQUEST_HEADERS.CONTENT_TYPE.JSON,
+            ...REQUEST_HEADERS.JWT(token)
+        }
+    }).then(res => {
+        console.log(`GOT DATA:`)
+        console.log([res.data])
+        dispatch({ type: RECOMMENDATION_ACTIONS.GET_SPECIFIC, payload: [res.data] })
+    }).catch(e => dispatch({ type: RECOMMENDATION_ACTIONS.GET_SPECIFIC_ERR, payload: e.message}))
+}

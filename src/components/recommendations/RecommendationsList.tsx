@@ -25,7 +25,9 @@ export const RecommendationsList = () => {
               {recsStore.error && <h1 className='text-danger'>{recsStore.error.message}</h1>}
               <Row md="6">
                   {!recsStore.error &&
-                      recommendations?.map((x: IRecommendationProps) => <RecommendationItem recommendation={x} key={x.id} />)
+                      recommendations?.map(
+                          (x: IRecommendationProps) =>
+                              <RecommendationItem user_id={userStore.id} token={userStore.token} recommendation={x} key={x.id} />)
                   }
               </Row>
           </Container>

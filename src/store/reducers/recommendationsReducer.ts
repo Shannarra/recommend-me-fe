@@ -30,6 +30,20 @@ export const recommendationsReducer = (state = {recommendations: [], loading: tr
                     message: 'Recommendation update failed. Reason: ' + action.payload.message
                 }
             }
+        case RECOMMENDATION_ACTIONS.GET_SPECIFIC:
+            return {
+                recommendations: action.payload,
+                loading: false,
+                error: null
+            }
+            case RECOMMENDATION_ACTIONS.GET_SPECIFIC_ERR:
+            return {
+                recommendations: [],
+                loading: false,
+                error: {
+                    message: 'Getting recommendation failed. Reason: ' + action.payload.message
+                }
+            }
         default:
             return state;
     }
