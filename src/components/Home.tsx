@@ -5,7 +5,6 @@ import {BeatLoader} from "react-spinners";
 import {IRootState} from "../types/interfaces/state.interfaces";
 import {AfterLogin} from "./user/AfterLogin";
 import {useEffect} from "react";
-import {Simulate} from "react-dom/test-utils";
 
 export const Home = () => {
     const {loading, error, user} = useSelector((state: IRootState) => state.user.user)

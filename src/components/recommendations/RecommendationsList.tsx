@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getAllRecommendations} from "../../store/actions/recommendationActions";
 import {IRootState} from "../../types/interfaces/state.interfaces";
 import {useEffect} from "react";
+
 export const RecommendationsList = () => {
     const userStore = useSelector((state: IRootState) => state.user.user);
     const dispatch = useDispatch();
@@ -16,8 +17,7 @@ export const RecommendationsList = () => {
 
     useEffect(() => {
         getAllRecommendations(dispatch, userStore.user.id, userStore.token);
-        console.log('loaded')
-    }, [dispatch, userStore.user.id,  userStore.token])
+    }, [userStore.token])
 
     if (!recsStore.loading)
       return (

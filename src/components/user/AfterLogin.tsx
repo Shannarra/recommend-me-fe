@@ -1,9 +1,5 @@
 import {IUserPureProps} from "../../types/interfaces/user.interfaces";
 import {RecommendationsList} from "../recommendations/RecommendationsList";
-import {useDispatch, useSelector} from "react-redux";
-import {IRootState} from "../../types/interfaces/state.interfaces";
-import {getAllRecommendations} from "../../store/actions/recommendationActions";
-
 
 export const AfterLogin = (props: { user: IUserPureProps, token: string}) => {
     const user = props.user;
